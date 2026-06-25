@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <link href="images/favicon.png" rel="icon" type="image/png"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>שף פרטי עד הבית</title>
+  <meta content="חוויית בשרים יוקרתית עד הבית - אירועים החל מ-15 סועדים" name="description"/>
+  <meta content="שף פרטי עד הבית" property="og:title"/>
+  <meta content="חוויית בשרים יוקרתית עד הבית - אירועים החל מ-15 סועדים" property="og:description"/>
+  <meta content="website" property="og:type"/>
+  <meta content="שף פרטי עד הבית" name="twitter:title"/>
+  <meta content="חוויית בשרים יוקרתית עד הבית - אירועים החל מ-15 סועדים" name="twitter:description"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="images/hero-bg.jpg" property="og:image"/>
+  <meta content="images/hero-bg.jpg" name="twitter:image"/>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="שף פרטי עד הבית" name="apple-mobile-web-app-title"/>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'heebo': ['Heebo', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { font-family: 'Heebo', sans-serif; }
+
+    html { scroll-behavior: smooth; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #FF0033; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #FF3366; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255,0,51,0.4); }
+      50% { box-shadow: 0 0 30px rgba(255,102,0,0.6); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes heroZoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.1); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+    .animate-fadeInLeft { animation: fadeInLeft 0.8s ease-out forwards; }
+    .animate-fadeInRight { animation: fadeInRight 0.8s ease-out forwards; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-marquee { animation: marquee 30s linear infinite; }
+    .animate-heroZoom { animation: heroZoom 20s ease-in-out infinite alternate; }
+
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .delay-800 { animation-delay: 0.8s; }
+
+    /* Intersection Observer animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: all 0.8s ease-out;
+    }
+    .reveal-left.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.8s ease-out;
+    }
+    .reveal-right.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #FF0033, #FF6600);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* WhatsApp button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+    }
+
+    /* Gallery slider */
+    .gallery-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    /* Menu card hover */
+    .menu-card {
+      transition: all 0.5s ease;
+    }
+    .menu-card:hover {
+      transform: translateY(-8px);
+    }
+
+    /* Nav active */
+    .nav-link.active {
+      color: #FF0033;
+    }
+
+    /* Mobile menu */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-content {
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    /* Testimonial card */
+    .testimonial-card {
+      background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98));
+      border: 1px solid rgba(255,0,51,0.2);
+    }
+
+    /* Service card */
+    .service-card {
+      background: linear-gradient(145deg, rgba(25,25,25,0.9), rgba(15,15,15,0.95));
+      border: 2px solid rgba(255,0,51,0.2);
+      transition: all 0.5s ease;
+    }
+    .service-card:hover {
+      border-color: rgba(255,0,51,0.5);
+      box-shadow: 0 20px 40px -10px rgba(255,0,51,0.2);
+      transform: translateY(-5px);
+    }
+
+    /* Partners marquee */
+    .partners-track {
+      display: flex;
+      width: max-content;
+    }
+
+    /* Counter animation */
+    .counter { display: inline-block; }
+  </style>
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-2">
+        <img src="images/logo.png" alt="אסרף מיט" class="h-10 md:h-12">
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#hero" class="nav-link text-white/80 hover:text-red-500 transition-colors text-sm font-medium">בית</a>
+        <a href="#gallery" class="nav-link text-white/80 hover:text-red-500 transition-colors text-sm font-medium">גלריה</a>
+        <a href="#about" class="nav-link text-white/80 hover:text-red-500 transition-colors text-sm font-medium">אודות</a>
+        <a href="#services" class="nav-link text-white/80 hover:text-red-500 transition-colors text-sm font-medium">שירותים</a>
+        <a href="#menus" class="nav-link text-white/80 hover:text-red-500 transition-colors text-sm font-medium">תפריטים</a>
+        <a href="#contact" class="nav-link text-white/80 hover:text-red-500 transition-colors text-sm font-medium px-6 py-2 rounded-sm" style="background: linear-gradient(135deg, #FF0033, #FF6600);">להזמנות</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobileMenuBtn" class="md:hidden text-white p-2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="4" x2="20" y1="6" y2="6"></line>
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-3/4 h-full bg-neutral-950 z-50 p-8 md:hidden">
+      <button id="closeMobileMenu" class="absolute top-4 left-4 text-white text-2xl">&times;</button>
+      <div class="flex flex-col gap-6 mt-12">
+        <a href="#hero" class="mobile-nav text-white text-lg font-medium hover:text-red-500 transition-colors">בית</a>
+        <a href="#gallery" class="mobile-nav text-white text-lg font-medium hover:text-red-500 transition-colors">גלריה</a>
+        <a href="#about" class="mobile-nav text-white text-lg font-medium hover:text-red-500 transition-colors">אודות</a>
+        <a href="#services" class="mobile-nav text-white text-lg font-medium hover:text-red-500 transition-colors">שירותים</a>
+        <a href="#menus" class="mobile-nav text-white text-lg font-medium hover:text-red-500 transition-colors">תפריטים</a>
+        <a href="#contact" class="mobile-nav text-white text-lg font-medium px-6 py-3 rounded-sm text-center" style="background: linear-gradient(135deg, #FF0033, #FF6600);">להזמנות</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 animate-heroZoom" style="background-image: url('images/hero-bg.jpg'); background-size: cover; background-position: center;"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div class="animate-fadeInUp">
+        <img src="images/logo.png" alt="אסרף מיט" class="h-20 md:h-28 mx-auto mb-8 animate-float">
+      </div>
+      <h1 class="animate-fadeInUp delay-200 text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+        <span class="gradient-text">שף פרטי</span>
+        <br>
+        <span class="text-white">עד הבית</span>
+      </h1>
+      <p class="animate-fadeInUp delay-300 text-lg md:text-2xl text-white/80 mb-4 font-light">
+        חוויית בשרים יוקרתית עד הבית
+      </p>
+      <p class="animate-fadeInUp delay-400 text-base md:text-lg text-white/60 mb-10">
+        אירועים החל מ-15 סועדים
+      </p>
+      <div class="animate-fadeInUp delay-500 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#contact" class="px-12 py-4 text-lg font-semibold rounded-sm text-white transition-all hover:scale-105" style="background: linear-gradient(135deg, #FF0033, #FF6600);">
+          הזמינו עכשיו
+        </a>
+        <a href="#about" class="px-12 py-4 text-lg font-semibold rounded-sm text-white transition-all hover:scale-105 border-2" style="border-color: #FF0033;">
+          מה עלינו
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-12 bg-gradient-to-b from-black to-neutral-950 relative">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div class="reveal text-center p-6">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="flame" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <div class="text-3xl md:text-4xl font-bold text-white mb-1"><span class="counter" data-target="400">0</span></div>
+          <div class="text-gray-400 text-sm">מנות</div>
+        </div>
+        <div class="reveal delay-100 text-center p-6">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="calendar" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <div class="text-3xl md:text-4xl font-bold text-white mb-1"><span class="counter" data-target="1500">0</span>+</div>
+          <div class="text-gray-400 text-sm">אירועים מוצלחים</div>
+        </div>
+        <div class="reveal delay-200 text-center p-6">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="award" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <div class="text-3xl md:text-4xl font-bold text-white mb-1"><span class="counter" data-target="10">0</span>+</div>
+          <div class="text-gray-400 text-sm">שנות ניסיון</div>
+        </div>
+        <div class="reveal delay-300 text-center p-6">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="users" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <div class="text-3xl md:text-4xl font-bold text-white mb-1"><span class="counter" data-target="7500">0</span></div>
+          <div class="text-gray-400 text-sm">לקוחות מרוצים</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-16 md:py-24 bg-gradient-to-b from-neutral-950 to-black relative overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">אנחנו יוצרים חוויה שמתחילה בטעם</h2>
+        <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mb-8"></div>
+        <p class="text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto mb-12">
+          שנים של ניסיון בבשר ואירוח הפכו אותנו למאסטרים ביצירת חוויות בלתי נשכחות. נתחי פרימיום מובחרים, עישון מושלם, שולחנות שופעים וריחות שמרגשים את כולם. אנחנו כאן כדי להפוך את האירוע שלך לאירוע שכולם ידברו עליו.
+        </p>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="relative">
+        <div id="galleryContainer" class="overflow-hidden rounded-sm">
+          <div id="galleryTrack" class="gallery-track">
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/table-setup.png" alt="שולחן בשרים מעוצב" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">שולחן בשרים מעוצב</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <div class="w-full h-64 md:h-80 rounded-sm overflow-hidden">
+                <iframe src="https://drive.google.com/file/d/1VWkCE06leLnwHQFJ3eRfss1UB3QKJcK7/preview" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy"></iframe>
+              </div>
+              <p class="text-center text-white/60 mt-2 text-sm">סרטון ראשי</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/meat-prep.jpg" alt="הכנת בשר" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">הכנת בשר</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <div class="w-full h-64 md:h-80 rounded-sm overflow-hidden">
+                <iframe src="https://drive.google.com/file/d/1y37ZWomG0lYsiXysQjNLrrQJhAnt4EkX/preview" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy"></iframe>
+              </div>
+              <p class="text-center text-white/60 mt-2 text-sm">סרטון 1</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/liron-asraf.jpg" alt="לירון אסרף" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">לירון אסרף</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/meat-platter.png" alt="מגש בשרים מוכן" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">מגש בשרים מוכן</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <div class="w-full h-64 md:h-80 rounded-sm overflow-hidden">
+                <iframe src="https://drive.google.com/file/d/1ynx2uAI2LeUSGCr5sNTstNUyIc-JH09V/preview?autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy"></iframe>
+              </div>
+              <p class="text-center text-white/60 mt-2 text-sm">סרטון 3</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/pineapple-steak.png" alt="פילה בקר במגדל אננס" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">פילה בקר במגדל אננס</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <div class="w-full h-64 md:h-80 rounded-sm overflow-hidden">
+                <iframe src="https://drive.google.com/file/d/1hmGjxDwnjjpiQYTB5SOoFi_onS_ev7j_/preview?autoplay=0" width="100%" height="100%" frameborder="0" allowfullscreen loading="lazy"></iframe>
+              </div>
+              <p class="text-center text-white/60 mt-2 text-sm">סרטון 2</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/event.jpg" alt="אירוע" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">אירוע</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/hero-bg.jpg" alt="מנה מוכנה" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">מנה מוכנה</p>
+            </div>
+            <div class="min-w-full md:min-w-[50%] lg:min-w-[33.333%] p-2 flex-shrink-0">
+              <img src="images/meat-cuts.png" alt="נתחי בשר איכותיים" class="w-full h-64 md:h-80 object-cover rounded-sm">
+              <p class="text-center text-white/60 mt-2 text-sm">נתחי בשר איכותיים</p>
+            </div>
+          </div>
+        </div>
+        <!-- Gallery Controls -->
+        <button id="galleryPrev" class="absolute top-1/2 right-2 -translate-y-1/2 bg-black/60 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <button id="galleryNext" class="absolute top-1/2 left-2 -translate-y-1/2 bg-black/60 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Carousel -->
+  <section class="py-16 md:py-24 bg-gradient-to-b from-black to-neutral-950 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5" style="background-image: url('images/texture-bg.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold mb-2 md:mb-4 text-white">מה הלקוחות שלנו אומרים</h2>
+        <p class="text-lg md:text-xl text-white/70">המלצות אמיתיות מלקוחות מרוצים</p>
+      </div>
+
+      <div class="overflow-hidden">
+        <div class="flex gap-6 py-4" style="animation: marquee 40s linear infinite;">
+          <!-- Testimonial cards repeated for marquee effect -->
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"לירון הפך לנו את יום ההולדת לחוויה בלתי נשכחת. הבשר היה מושלם, השירות מעל ומעבר, וכל האורחים לא הפסיקו לדבר על האוכל."</p>
+            <p class="text-red-400 font-semibold text-sm">— דנה כ.</p>
+          </div>
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"הזמנו את לירון לאירוע חברה של 80 איש. מקצוען אמיתי! התפריט היה מדהים, הגריל בדיוק כמו שצריך, והאווירה הייתה מושלמת."</p>
+            <p class="text-red-400 font-semibold text-sm">— אורי מ.</p>
+          </div>
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"פשוט ברמה אחרת. נתחי הפרימיום שלירון הכין היו הדבר הכי טעים שאכלתי. שירות אדיב, מקצועי ומדויק. ממליצה בחום!"</p>
+            <p class="text-red-400 font-semibold text-sm">— מיכל ת.</p>
+          </div>
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"עשינו בר מצווה עם אסרף מיט וזה היה האירוע הכי מוצלח שעשינו. הילדים והמבוגרים נהנו, והשולחן נראה כמו מתוך מגזין."</p>
+            <p class="text-red-400 font-semibold text-sm">— יוסי ר.</p>
+          </div>
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"כבר הפעם השלישית שאנחנו מזמינים את לירון. כל פעם מחדש הוא מפתיע אותנו. בשר ברמה הכי גבוהה שיש!"</p>
+            <p class="text-red-400 font-semibold text-sm">— שרון ד.</p>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"לירון הפך לנו את יום ההולדת לחוויה בלתי נשכחת. הבשר היה מושלם, השירות מעל ומעבר, וכל האורחים לא הפסיקו לדבר על האוכל."</p>
+            <p class="text-red-400 font-semibold text-sm">— דנה כ.</p>
+          </div>
+          <div class="testimonial-card min-w-[300px] md:min-w-[400px] p-6 rounded-sm flex-shrink-0">
+            <div class="flex gap-1 mb-3">
+              <span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span><span class="text-yellow-400">★</span>
+            </div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"הזמנו את לירון לאירוע חברה של 80 איש. מקצוען אמיתי! התפריט היה מדהים, הגריל בדיוק כמו שצריך, והאווירה הייתה מושלמת."</p>
+            <p class="text-red-400 font-semibold text-sm">— אורי מ.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="relative py-24 bg-neutral-950 overflow-hidden">
+    <div class="absolute inset-0 opacity-5" style="background-image: url('images/texture-bg.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+        <div class="reveal-left order-2 md:order-1">
+          <img src="images/chef.png" alt="השף לירון אסרף מכין בשר איכותי לאירוע" class="w-full rounded-sm shadow-2xl" style="border: 2px solid rgba(255,0,51,0.5);">
+        </div>
+        <div class="order-1 md:order-2">
+          <div class="reveal-right">
+            <div class="mb-6">
+              <div class="flex items-center gap-3 mb-3">
+                <i data-lucide="chef-hat" class="w-8 h-8 text-red-500"></i>
+                <h2 class="text-4xl md:text-5xl font-bold text-white">אודות אסרף מיט</h2>
+              </div>
+              <h3 class="text-2xl md:text-3xl text-white/80 font-light mr-11">שף לירון אסרף</h3>
+            </div>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-red-500 via-orange-500 to-transparent mb-8"></div>
+            <p class="text-lg text-white/80 leading-relaxed mb-6">
+              אני לירון אסרף, וחי ונושם בשר. עם שנים של ניסיון באירוח, גריל ואומנות הבשר, הפכתי מאות אירועים לחוויות שאנשים זוכרים.
+            </p>
+            <p class="text-lg text-white/80 leading-relaxed mb-6">
+              ההתמחות שלי היא בנתחי פריים מובחרים, עישון מקצועי ושולחנות שופעים שממלאים את האוויר בריח משכר.
+            </p>
+            <p class="text-lg text-white/80 leading-relaxed">
+              הגישה שלי פשוטה וברורה: חומרי גלם מהשורה הראשונה, טכניקה מדויקת, ושירות בגובה העיניים — כזה שמבטיח שכל אורח יוצא שבע, מחויך ומרוצה.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="relative py-24 bg-black overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: url('images/texture-bg.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">למה דווקא אסרף מיט?</h2>
+        <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mb-6"></div>
+        <p class="text-lg md:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+          אנחנו לא רק "עושים על האש"- אנחנו יוצרים חוויה קולינרית שלמה. עם ניסיון עשיר, מאות אירועים מוצלחים וסטנדרט בלתי מתפשר על איכות הבשר והשירות. אסרף מיט הופכים כל אירוע לחוויה בלתי נשכחת שכולם ימשיכו לדבר עליו.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="reveal service-card p-8 rounded-sm text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="moon" class="w-8 h-8 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">שומרים על שבת ומועדים</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">אנחנו לא עובדים בשבתות ובחגים - מכבדים את המסורת ומקפידים על איזון בין עבודה למשפחה.</p>
+        </div>
+        <div class="reveal delay-100 service-card p-8 rounded-sm text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="star" class="w-8 h-8 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">חוויה אישית ובלתי נשכחת</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">אני מגיע לכל אירוע בעצמי, מבשל מול האורחים ונותן יחס אישי עם חיוך — מהרגע הראשון ועד הביס האחרון.</p>
+        </div>
+        <div class="reveal delay-200 service-card p-8 rounded-sm text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="award" class="w-8 h-8 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">איכות ללא פשרות</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">בשר פרימיום, עישון מקצועי, טעמים עמוקים ומנות שנראות מעולה וגם מצטלמות מושלם לכל סטורי.</p>
+        </div>
+        <div class="reveal delay-300 service-card p-8 rounded-sm text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="trending-up" class="w-8 h-8 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">ניסיון של מעל 10 שנים</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">אלפי אירועים מוצלחים, לקוחות מרוצים מכל הארץ ומאות המלצות חמות.</p>
+        </div>
+        <div class="reveal delay-400 service-card p-8 rounded-sm text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="settings" class="w-8 h-8 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">התאמה אישית מלאה</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">כל תפריט נבנה לפי האירוע שלך — בין אם זו מסיבת גג אינטימית או אירוע חברה גדול.</p>
+        </div>
+        <div class="reveal delay-500 service-card p-8 rounded-sm text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="package" class="w-8 h-8 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">הכול במקום אחד</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">מהגריל ועד ההגשה: שולחן שופע, שירות מקצועי ותיאום מלא — בלי כאב ראש, ועם הרבה שקט נפשי.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-24 bg-gradient-to-b from-black via-neutral-950 to-black relative overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">השירותים שלנו</h2>
+        <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mb-6"></div>
+        <p class="text-lg md:text-xl text-white/60">כל סוגי האירועים, חוויה אחת מושלמת</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="reveal service-card p-8 rounded-sm">
+          <div class="w-14 h-14 mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="flame" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">ערב בשרים</h3>
+          <p class="text-red-400 text-sm mb-3">חוויה אינטימית של בשרים על האש אצלכם בבית או בחצר.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">אני מגיע עם נתחי פריים מובחרים, ציוד מלא והגשה מוקפדת – כדי להפוך ערב בשרים לאירוע אמיתי.</p>
+        </div>
+        <div class="reveal delay-100 service-card p-8 rounded-sm">
+          <div class="w-14 h-14 mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="briefcase" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">אירועי חברה</h3>
+          <p class="text-red-400 text-sm mb-3">אירועי גיבוש, השקות ומסיבות סוף שנה.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">אני יוצר חוויה שמחברת את הצוות סביב שולחן שופע טעמים, עם אוכל מצוין ואווירה שמרגישים גם אחרי שהאירוע נגמר.</p>
+        </div>
+        <div class="reveal delay-200 service-card p-8 rounded-sm">
+          <div class="w-14 h-14 mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="house" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">אירועים פרטיים</h3>
+          <p class="text-red-400 text-sm mb-3">ימי הולדת, מסיבות משפחתיות וערבי חג.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">תפריט בשרים מותאם אישית, שולחן עשיר וליווי מלא – כדי שאתם תוכלו להיות האורחים באירוע שלכם.</p>
+        </div>
+        <div class="reveal delay-300 service-card p-8 rounded-sm">
+          <div class="w-14 h-14 mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="party-popper" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">מסיבות ואירועים מיוחדים</h3>
+          <p class="text-red-400 text-sm mb-3">בר או בת מצווה, מסיבת רווקים או אירוע מיוחד.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">אני בונה תפריט שמותאם לאופי האירוע ולאורחים, עם בשר פרימיום, קצב נכון וחוויה שמרגישה מדויקת.</p>
+        </div>
+        <div class="reveal delay-400 service-card p-8 rounded-sm">
+          <div class="w-14 h-14 mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="chef-hat" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">שף בשרים לאירועים</h3>
+          <p class="text-red-400 text-sm mb-3">שף בשר מקצועי שמגיע עד אליכם.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">מבשל, צולה ומגיש מול האורחים, ויוצר חוויה קולינרית מלאה סביב האש והשולחן.</p>
+        </div>
+        <div class="reveal delay-500 service-card p-8 rounded-sm">
+          <div class="w-14 h-14 mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+            <i data-lucide="users" class="w-7 h-7 text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-2">קייטרינג בוטיק</h3>
+          <p class="text-red-400 text-sm mb-3">פתרון מלא לאירועים פרטיים.</p>
+          <p class="text-gray-400 text-sm leading-relaxed">תפריט בהתאמה אישית, חומרי גלם מהשורה הראשונה, שירות מוקפד והגשה שמכבדת כל אירוע.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menus" class="py-24 bg-black relative overflow-hidden">
+    <div class="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style="background: linear-gradient(to top, rgba(255,80,0,0.15), transparent);"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6">
+      <div class="reveal text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">בחרו את התפריט שלכם</h2>
+        <p class="text-white/60 text-lg">ארבעה תפריטים יוקרתיים לכל אירוע</p>
+        <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
+        <!-- Classic Menu -->
+        <button onclick="openMenuModal('classic')" class="menu-card relative p-3 md:p-8 rounded-sm text-center cursor-pointer" style="background: linear-gradient(145deg, rgba(25,25,25,0.9), rgba(15,15,15,0.95)); border: 2px solid rgba(255,0,51,0.3);">
+          <div class="relative z-10">
+            <div class="mx-auto mb-2 md:mb-6 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center animate-pulse-glow" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+              <i data-lucide="star" class="w-5 h-5 md:w-8 md:h-8 text-red-500"></i>
+            </div>
+            <h3 class="text-sm md:text-2xl font-bold mb-1 md:mb-3 text-white">תפריט קלאסי</h3>
+            <p class="text-gray-400 text-xs md:text-sm hidden md:block">מבחר נתחים מעולים לחגיגה משפחתית</p>
+          </div>
+        </button>
+
+        <!-- Chef Menu -->
+        <button onclick="openMenuModal('chef')" class="menu-card relative p-3 md:p-8 rounded-sm text-center cursor-pointer" style="background: linear-gradient(145deg, rgba(25,25,25,0.9), rgba(15,15,15,0.95)); border: 2px solid rgba(255,0,51,0.3);">
+          <div class="relative z-10">
+            <div class="mx-auto mb-2 md:mb-6 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center animate-pulse-glow" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+              <i data-lucide="award" class="w-5 h-5 md:w-8 md:h-8 text-red-500"></i>
+            </div>
+            <h3 class="text-sm md:text-2xl font-bold mb-1 md:mb-3 text-white">תפריט השף</h3>
+            <p class="text-gray-400 text-xs md:text-sm hidden md:block">שילוב מושלם של נתחי פרימיום</p>
+          </div>
+        </button>
+
+        <!-- Premium Menu -->
+        <button onclick="openMenuModal('premium')" class="menu-card relative p-3 md:p-8 rounded-sm text-center cursor-pointer" style="background: linear-gradient(145deg, rgba(25,25,25,0.9), rgba(15,15,15,0.95)); border: 2px solid rgba(255,0,51,0.3);">
+          <div class="relative z-10">
+            <div class="mx-auto mb-2 md:mb-6 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center animate-pulse-glow" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+              <i data-lucide="sparkles" class="w-5 h-5 md:w-8 md:h-8 text-red-500"></i>
+            </div>
+            <h3 class="text-sm md:text-2xl font-bold mb-1 md:mb-3 text-white">תפריט פרימיום</h3>
+            <p class="text-gray-400 text-xs md:text-sm hidden md:block">חוויה קולינרית מורחבת ומפנקת</p>
+          </div>
+        </button>
+
+        <!-- Gourmet Menu -->
+        <button onclick="openMenuModal('gourmet')" class="menu-card relative p-3 md:p-8 rounded-sm text-center cursor-pointer" style="background: linear-gradient(145deg, rgba(25,25,25,0.9), rgba(15,15,15,0.95)); border: 2px solid rgba(255,0,51,0.3);">
+          <div class="relative z-10">
+            <div class="mx-auto mb-2 md:mb-6 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center animate-pulse-glow" style="background: linear-gradient(135deg, rgba(255,0,51,0.3), rgba(255,102,0,0.1)); border: 2px solid rgba(255,0,51,0.5);">
+              <i data-lucide="crown" class="w-5 h-5 md:w-8 md:h-8 text-red-500"></i>
+            </div>
+            <h3 class="text-sm md:text-2xl font-bold mb-1 md:mb-3 text-white">תפריט גורמה</h3>
+            <p class="text-gray-400 text-xs md:text-sm hidden md:block">חוויית השף המלאה - הטוב מכל</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Modal -->
+  <div id="menuModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0,0,0,0.8);">
+    <div class="modal-content bg-neutral-900 border border-amber-900/30 max-w-4xl w-full max-h-[90vh] p-4 overflow-y-auto rounded-sm relative">
+      <button onclick="closeMenuModal()" class="absolute top-4 left-4 text-white text-2xl hover:text-red-500 transition-colors z-10">&times;</button>
+      <div class="text-center mb-4">
+        <h2 id="menuModalTitle" class="text-2xl font-bold text-white flex items-center justify-center gap-3">
+          <i data-lucide="flame" class="w-6 h-6 text-red-500"></i>
+          <span></span>
+          <i data-lucide="flame" class="w-6 h-6 text-red-500"></i>
+        </h2>
+      </div>
+      <div class="mt-4">
+        <img id="menuModalImage" src="" alt="" class="w-full h-auto rounded-sm">
+      </div>
+    </div>
+  </div>
+
+  <!-- Salads Section -->
+  <section class="py-16 md:py-24 bg-gradient-to-b from-black via-neutral-950 to-black relative overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">סלטים ומנות פתיחה</h2>
+        <p class="text-white/60 text-lg mb-6">מגיעים עם כל תפריט</p>
+        <button onclick="openSaladsModal()" class="px-8 py-4 text-lg text-white rounded-sm transition-all hover:scale-105" style="background: linear-gradient(135deg, #FF0033, #FF6600);">
+          צפייה ברשימת הסלטים
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Salads Modal -->
+  <div id="saladsModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0,0,0,0.8);">
+    <div class="modal-content bg-neutral-900 border border-red-900/30 max-w-4xl w-full max-h-[80vh] p-6 overflow-y-auto rounded-sm relative">
+      <button onclick="closeSaladsModal()" class="absolute top-4 left-4 text-white text-2xl hover:text-red-500 transition-colors z-10">&times;</button>
+      <h2 class="text-3xl text-center mb-6 text-white font-bold">סלטים ומנות פתיחה</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">סלט כרוב לבן</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">סלט כרוב לבן קצוץ דק, מתובל בשמן זית, לימון, מלח ופלפל. סלט קל טרי ומרענן שמתאים לכל ארוחה.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">פלטת פלפלים</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">שילוב של פלפלים צבעוניים וחריפים ירוקים לאיזון מדויק של טעמים.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">סלט ישראלי</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">מיקס טרי ורענן של ירקות חתוכים דק.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">סלט שרי בתיבול הבית</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">עגבניות שרי טריות, בצל סגול, פטרוזיליה, שמן זית ולימון.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">חציל בלאדי על האש</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">מוגש בליווי מטבלי הבית שלנו: טחינה עשירה, שום קונפי רך וצ'ימיצ'ורי מרענן.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">קרפצ'יו בקר</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">נתח פילה בקר פרוס דק, מוגש עם שמן זית, חומץ בלסמי, מלח ופלפל שחור, וסילאן תמרים מתקתק.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">סטייק פורטובלו על הגריל</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">פטריות פורטובלו גדולות במיוחד, צלויות בדיוק למרקם עסיסי.</p>
+        </div>
+        <div class="p-4 rounded-sm" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 2px solid rgba(255,0,51,0.3);">
+          <h3 class="text-lg font-bold text-white mb-2">מנת בשר ערבים הבית</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">רבעי עראיס במילוי קבב עסיסי, פריך מבחוץ ונמס מבפנים.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Gallery (Instagram-style) -->
+  <section class="py-16 md:py-24 bg-gradient-to-b from-black to-neutral-950 relative overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">מהאירועים שלנו</h2>
+        <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div class="reveal overflow-hidden rounded-sm group">
+          <img src="images/gallery1.jpg" alt="אירוע בשרים פרטי של אסרף מיט" loading="lazy" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+        </div>
+        <div class="reveal delay-100 overflow-hidden rounded-sm group">
+          <img src="images/gallery2.jpg" alt="שולחן בשרים מעוצב לאירוע" loading="lazy" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+        </div>
+        <div class="reveal delay-200 overflow-hidden rounded-sm group">
+          <img src="images/gallery3.jpg" alt="הכנת נתחי פרימיום על הגריל" loading="lazy" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+        </div>
+        <div class="reveal delay-300 overflow-hidden rounded-sm group">
+          <img src="images/gallery4.jpg" alt="מגש בשרים מוכן להגשה" loading="lazy" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+        </div>
+        <div class="reveal delay-400 overflow-hidden rounded-sm group">
+          <img src="images/gallery5.jpg" alt="אירוח VIP עם שף פרטי" loading="lazy" class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners Section -->
+  <section class="py-16 bg-black relative overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold text-white">בין לקוחותינו</h2>
+      </div>
+      <div class="overflow-hidden">
+        <div class="flex items-center gap-16 animate-marquee">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg" alt="Oracle" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg" alt="HP" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/superpharm-logo.png" alt="Super Pharm" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/carmel-logo.png" alt="Carmel" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/bankhapoalim-logo.png" alt="Bank Hapoalim" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/hot-logo.png" alt="HOT" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <!-- Duplicate for seamless marquee -->
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg" alt="Oracle" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/HP_logo_2012.svg" alt="HP" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/superpharm-logo.png" alt="Super Pharm" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/carmel-logo.png" alt="Carmel" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/bankhapoalim-logo.png" alt="Bank Hapoalim" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+          <img src="images/hot-logo.png" alt="HOT" class="h-8 md:h-12 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-24 relative overflow-hidden" style="background: linear-gradient(to bottom, #000, #0a0a0a);">
+    <div class="absolute inset-0 opacity-10" style="background-image: url('images/texture-bg.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6">
+      <div class="reveal text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">הזמינו עכשיו</h2>
+        <p class="text-white/60 text-lg">מלאו את הפרטים ונחזור אליכם בהקדם</p>
+        <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto mt-6"></div>
+      </div>
+
+      <form id="contactForm" class="max-w-2xl mx-auto space-y-4">
+        <div class="reveal">
+          <label for="name" class="sr-only">שם מלא</label>
+          <div class="relative">
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <i data-lucide="user" class="w-5 h-5"></i>
+            </span>
+            <input type="text" id="name" name="name" placeholder="שם מלא" required
+              class="w-full pr-12 bg-neutral-900/80 border border-red-900/30 text-white placeholder:text-gray-500 focus:border-red-500/50 h-14 rounded-sm px-4 outline-none transition-colors">
+          </div>
+        </div>
+
+        <div class="reveal delay-100">
+          <label for="phone" class="sr-only">מספר טלפון</label>
+          <div class="relative">
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <i data-lucide="phone" class="w-5 h-5"></i>
+            </span>
+            <input type="tel" id="phone" name="phone" placeholder="טלפון (05XXXXXXXX)" required
+              class="w-full pr-12 bg-neutral-900/80 border border-red-900/30 text-white placeholder:text-gray-500 focus:border-red-500/50 h-14 rounded-sm px-4 outline-none transition-colors">
+          </div>
+          <p id="phoneError" class="text-red-500 text-sm mt-1 hidden">נא להזין מספר טלפון תקין (05XXXXXXXX)</p>
+        </div>
+
+        <div class="reveal delay-200">
+          <label for="guests" class="sr-only">מספר סועדים</label>
+          <div class="relative">
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <i data-lucide="users" class="w-5 h-5"></i>
+            </span>
+            <input type="number" id="guests" name="guests" placeholder="מספר סועדים" min="15" required
+              class="w-full pr-12 bg-neutral-900/80 border border-red-900/30 text-white placeholder:text-gray-500 focus:border-red-500/50 h-14 rounded-sm px-4 outline-none transition-colors">
+          </div>
+        </div>
+
+        <div class="reveal delay-300">
+          <label for="date" class="sr-only">תאריך אירוע</label>
+          <div class="relative">
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <i data-lucide="calendar" class="w-5 h-5"></i>
+            </span>
+            <input type="date" id="date" name="date" required
+              class="w-full pr-12 bg-neutral-900/80 border border-red-900/30 text-white placeholder:text-gray-500 focus:border-red-500/50 h-14 rounded-sm px-4 outline-none transition-colors">
+          </div>
+        </div>
+
+        <div class="reveal delay-400">
+          <label for="location" class="sr-only">מיקום</label>
+          <div class="relative">
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </span>
+            <input type="text" id="location" name="location" placeholder="מיקום האירוע"
+              class="w-full pr-12 bg-neutral-900/80 border border-red-900/30 text-white placeholder:text-gray-500 focus:border-red-500/50 h-14 rounded-sm px-4 outline-none transition-colors">
+          </div>
+        </div>
+
+        <div class="reveal delay-500">
+          <label for="notes" class="sr-only">הערות</label>
+          <textarea id="notes" name="notes" placeholder="הערות נוספות" rows="4"
+            class="w-full bg-neutral-900/80 border border-red-900/30 text-white placeholder:text-gray-500 focus:border-red-500/50 rounded-sm p-4 outline-none transition-colors resize-none"></textarea>
+        </div>
+
+        <!-- Selected menu display -->
+        <div id="selectedMenuDisplay" class="reveal delay-500 p-3 rounded-sm text-center hidden" style="background: linear-gradient(145deg, rgba(30,28,25,0.95), rgba(20,18,15,0.98)); border: 1px solid rgba(255,0,51,0.3);">
+          <p class="text-white/60 text-sm">תפריט שנבחר: <span id="selectedMenuName" class="text-red-400 font-semibold"></span></p>
+        </div>
+
+        <div class="reveal delay-600">
+          <button type="submit" class="w-full h-14 text-lg font-bold text-white rounded-sm transition-all hover:scale-[1.02] flex items-center justify-center gap-2" style="background: linear-gradient(135deg, #FF0033, #FF6600);">
+            <i data-lucide="send" class="w-5 h-5"></i>
+            שליחת הזמנה
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-black border-t border-red-900/20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <p class="text-gray-500 text-sm">&copy; <span id="currentYear"></span> שף בשרים פרטי. כל הזכויות שמורות.</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/972507777151" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Initialize Lucide Icons
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+
+      // Set current year
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+    });
+
+    // ============ MOBILE MENU ============
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+    closeMobileMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
+
+    document.querySelectorAll('.mobile-nav').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ============ NAVBAR SCROLL ============
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(0,0,0,0.95)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.5)';
+      } else {
+        navbar.style.background = 'rgba(0,0,0,0.8)';
+        navbar.style.boxShadow = 'none';
+      }
+    });
+
+    // ============ INTERSECTION OBSERVER (Reveal animations) ============
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ============ COUNTER ANIMATION ============
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.getAttribute('data-target'));
+          animateCounter(entry.target, target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+
+    function animateCounter(element, target) {
+      let current = 0;
+      const increment = target / 60;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target.toLocaleString();
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current).toLocaleString();
+        }
+      }, 30);
+    }
+
+    // ============ GALLERY SLIDER ============
+    let galleryIndex = 0;
+    const galleryTrack = document.getElementById('galleryTrack');
+    const galleryItems = galleryTrack.children;
+
+    function getItemsPerView() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+
+    function updateGallery() {
+      const itemsPerView = getItemsPerView();
+      const maxIndex = galleryItems.length - itemsPerView;
+      if (galleryIndex > maxIndex) galleryIndex = maxIndex;
+      if (galleryIndex < 0) galleryIndex = 0;
+      const percentage = -(galleryIndex * (100 / itemsPerView));
+      galleryTrack.style.transform = `translateX(${percentage}%)`;
+    }
+
+    document.getElementById('galleryNext').addEventListener('click', () => {
+      galleryIndex++;
+      const itemsPerView = getItemsPerView();
+      if (galleryIndex > galleryItems.length - itemsPerView) galleryIndex = 0;
+      updateGallery();
+    });
+
+    document.getElementById('galleryPrev').addEventListener('click', () => {
+      galleryIndex--;
+      if (galleryIndex < 0) galleryIndex = galleryItems.length - getItemsPerView();
+      updateGallery();
+    });
+
+    window.addEventListener('resize', updateGallery);
+
+    // ============ MENU MODALS ============
+    const menuData = {
+      classic: { name: 'תפריט קלאסי', image: 'images/menu-classic.jpg' },
+      chef: { name: 'תפריט השף', image: 'images/menu-chef.jpg' },
+      premium: { name: 'תפריט פרימיום', image: 'images/menu-premium.jpg' },
+      gourmet: { name: 'תפריט גורמה', image: 'images/menu-gourmet.jpg' }
+    };
+
+    let selectedMenu = null;
+
+    function openMenuModal(menuId) {
+      const menu = menuData[menuId];
+      if (!menu) return;
+      selectedMenu = menuId;
+      document.querySelector('#menuModalTitle span').textContent = menu.name;
+      document.getElementById('menuModalImage').src = menu.image;
+      document.getElementById('menuModalImage').alt = menu.name;
+      document.getElementById('menuModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Update selected menu display in form
+      document.getElementById('selectedMenuDisplay').classList.remove('hidden');
+      document.getElementById('selectedMenuName').textContent = menu.name;
+    }
+
+    function closeMenuModal() {
+      document.getElementById('menuModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('menuModal').addEventListener('click', function(e) {
+      if (e.target === this) closeMenuModal();
+    });
+
+    // ============ SALADS MODAL ============
+    function openSaladsModal() {
+      document.getElementById('saladsModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSaladsModal() {
+      document.getElementById('saladsModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('saladsModal').addEventListener('click', function(e) {
+      if (e.target === this) closeSaladsModal();
+    });
+
+    // ============ CONTACT FORM ============
+    const contactForm = document.getElementById('contactForm');
+
+    function validatePhone(phone) {
+      const clean = phone.replace(/[-\s]/g, '');
+      return /^05\d{8}$/.test(clean);
+    }
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const guests = document.getElementById('guests').value;
+      const date = document.getElementById('date').value;
+      const location = document.getElementById('location').value;
+      const notes = document.getElementById('notes').value;
+      const cleanPhone = phone.replace(/[-\s]/g, '');
+
+      // Validate phone
+      if (!validatePhone(phone)) {
+        document.getElementById('phoneError').classList.remove('hidden');
+        return;
+      }
+      document.getElementById('phoneError').classList.add('hidden');
+
+      // Validate minimum guests
+      if (parseInt(guests) < 15) {
+        showToast('מינימום 15 סועדים לאירוע');
+        return;
+      }
+
+      // Validate future date
+      const today = new Date().toISOString().split('T')[0];
+      if (date < today) {
+        showToast('נא לבחור תאריך עתידי');
+        return;
+      }
+
+      const menuName = selectedMenu ? menuData[selectedMenu].name : 'לא נבחר';
+
+      // Build WhatsApp message
+      const message = `🔥 *הזמנה חדשה מהאתר!*
+📋 *פרטי ההזמנה:*
+• שם הלקוח: ${name}
+• טלפון: ${phone}
+• מספר סועדים: ${guests}
+• תאריך: ${date}
+• מיקום: ${location || 'לא צוין'}
+• תפריט: ${menuName}
+• הערות: ${notes || 'אין'}`;
+
+      // Open WhatsApp with the message
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=972533338310&text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+
+      // Also open customer WhatsApp confirmation
+      const customerMessage = `שלום ${name}! 🔥
+תודה שפנית לאסרף מיט!
+קיבלנו את ההזמנה שלך ונחזור אליך בהקדם.
+
+📋 פרטי ההזמנה:
+• מספר סועדים: ${guests}
+• תאריך: ${date}
+• תפריט: ${menuName}
+
+נשמח לעמוד לשירותך! 🥩`;
+
+      setTimeout(() => {
+        const customerUrl = `https://wa.me/972507777151?text=${encodeURIComponent(customerMessage)}`;
+        window.open(customerUrl, '_blank');
+      }, 1000);
+
+      // Reset form
+      contactForm.reset();
+      document.getElementById('selectedMenuDisplay').classList.add('hidden');
+      selectedMenu = null;
+
+      // Show success message
+      showToast('ההזמנה נשלחה בהצלחה! 🔥');
+    });
+
+    // ============ TOAST NOTIFICATION ============
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-sm text-white font-semibold text-sm transition-all';
+      toast.style.background = 'linear-gradient(135deg, #FF0033, #FF6600)';
+      toast.style.boxShadow = '0 10px 30px rgba(255,0,51,0.3)';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, -20px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // ============ KEYBOARD SHORTCUTS ============
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeMenuModal();
+        closeSaladsModal();
+        mobileMenu.classList.remove('open');
+      }
+    });
+
+    // ============ ACTIVE NAV HIGHLIGHT ============
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY + 100;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (navLink) {
+          if (scrollPos >= top && scrollPos < top + height) {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            navLink.classList.add('active');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
